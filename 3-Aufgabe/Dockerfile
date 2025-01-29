@@ -1,15 +1,11 @@
-# Dockerfile
-FROM public.ecr.aws/lambda/nodejs:18
+FROM public.ecr.aws/lambda/nodejs:22
 
-# Copy package.json and install dependencies
-COPY package.json package-lock.json ./
-RUN npm install
+COPY ./package.json ${LAMBDA_TASK_ROOT}
+RUN npm i
 
-# Copy function code
-COPY index.js ${LAMBDA_TASK_ROOT}
+COPY ./index.js ${LAMBDA_TASK_ROOT}
 
-# Set environment variable
-ENV MY_ENV_VAR="Default Docker Value"
+# Korrigierte ENV-Anweisung
+ENV MY_ENV_VAR "From Dockerfile"
 
-# Set the CMD to your handler
-CMD [ "index.handler" ]
+CMD ["index.handler"]
